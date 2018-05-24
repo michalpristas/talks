@@ -149,7 +149,7 @@ $ GOPROXY=https://gomods.io
 - Step 3: vgo get from proxy |
 - Step 4: |
   + Proxy responds with 404: go get VCS |
-  + Proxy serves package: use package, break; |
+  + Proxy serves package: uses package |
 
 ---
 
@@ -175,7 +175,7 @@ The Athens project will build
 ## Athens 
 
 - Proxy server for vgo modules,
-- Cache modules locally,
+- Caches modules locally,
 - Implements the download protocol,
 
 ---
