@@ -57,7 +57,9 @@ module "my/thing"
 require "github.com/michalpristas/foo" v1.0.2
 require "github.com/michalpristas/bar" v2.3.4
 ```
-@[1,3](go.mod file)
+@[1](module name)
+@[2](from import "github.com/michalpristas/foo" )
+@[3](from import "github.com/michalpristas/bar/v2")
 
 ---
 
@@ -85,10 +87,9 @@ That's it!
 $ goversion -mh ./hello
 hello go1.10
 	path  github.com/you/hello
-	mod   github.com/you/hello  (devel)
-	dep   golang.org/x/text     v0.0.0-20170915032832-14c0d48ead0c  h1:qgOY6WgZOaTkIIMiVjBQcw93ERBE4m30iBm00nkL0i8=
-	dep   rsc.io/quote          v1.5.2                              h1:w5fcysjrx7yqtD/aO+QwRjYZOKnaM9Uh2b40tElTs3Y=
-	dep   rsc.io/sampler        v1.3.1                              h1:F0c3J2nQCdk9ODsNhU3sElnvPIxM/xV1c/qZuAeZmac=
+	mod   github.com/you/hello  (devel)	
+	dep   rsc.io/quote      v1.5.2    h1:w5fcysjrx7yqt...
+	dep   rsc.io/sampler    v1.3.1    h1:F0c3J2nQCdk9O...
 ```
 
 ---
@@ -99,20 +100,19 @@ hello go1.10
 $ echo >go.modverify
 $ vgo build
 $ tcat go.modverify  # go get rsc.io/tcat, or use cat
-golang.org/x/text  v0.0.0-20170915032832-14c0d48ead0c  h1:qgOY6WgZOaTkIIMiVjBQcw93ERBE4m30iBm00nkL0i8=
-rsc.io/quote       v1.5.2                              h1:w5fcysjrx7yqtD/aO+QwRjYZOKnaM9Uh2b40tElTs3Y=
-rsc.io/sampler     v1.3.0                              h1:7uVkIFmeBqHfdjD+gZwtXXI+RODJ2Wc4O7MPEh/QiW4=
+rsc.io/quote      v1.5.2    h1:w5fcysjrx7yqt...
+rsc.io/sampler    v1.3.0    h1:7uVkIFmeBqHfd...
 ```
 
 ---
 
-## Verified builds - mismatch
+## Verified builds
 
 ```bash
 $ vgo build
 vgo: verifying rsc.io/quote v1.5.2: module hash mismatch
-	downloaded:   h1:w5fcysjrx7yqtD/aO+QwRjYZOKnaM9Uh2b40tElTs3Y=
-	go.modverify: h1:v5fcysjrx7yqtD/aO+QwRjYZOKnaM9Uh2b40tElTs3Y=
+	downloaded:   h1:w5fcysjrx7yqt...
+	go.modverify: h1:v5fcysjrx7yqt...
 ```
 
 ---
@@ -126,13 +126,12 @@ vgo: verifying rsc.io/quote v1.5.2: module hash mismatch
 ## Reproducible builds
 
 - Me: using package foo/bar v1.0 |
-- Me: vgo get v1.0 |
+- Me: vgo build |
 - Me happy, build works |
-- Pete: oh I forgot to add this |
+- Pete: oh I forgot to add this little thing |
 - Pete: force push tag to keep v1.0 |
-- My CI: vgo get v1.0  |
-
-Is it really the same package?
+- My CI: vgo build  |
+- Is it really the same package? |
 
 ---
 
@@ -148,9 +147,9 @@ $ GOPROXY=https://gomods.io
 - Step 1: import |
 - Step 2: detect |
 - Step 3: vgo get from proxy |
-- Step 4: 
-  + Proxy responds with 404: go get VCS
-  + Proxy serves package: use package, break;
+- Step 4: |
+  + Proxy responds with 404: go get VCS |
+  + Proxy serves package: use package, break; |
 
 ---
 
@@ -161,15 +160,15 @@ $ GOPROXY=https://gomods.io
 - Hosting SAME bits for module versions |
 - Started At Microsoft |
 - In cooperation with the Go team |
-- Open Source: https://github.com/gomods/athens |
+- Open Source |
 
 ---
 
 ## What is Athens
 
 The Athens project will build 
-- a network of official proxy servers.
-- an official central repository that is geographically distributed 
+- a network of official proxy servers |
+- an official central repository that is geographically distributed |
 
 ---
 
@@ -192,8 +191,8 @@ The Athens project will build
 
 - Reporting cache misses to Olympus |
 - Pulling event log from Olympus |
+- Proxy has a pointer to a latest sync |
 - Event log is append only |
-- Proxy has a pointer to a latest sync
 
 ---
 
@@ -201,7 +200,7 @@ The Athens project will build
 
 - Each Olympus knows about neighbours |
 - Unreliable push synchronization |
-- Pull synchronization between instances 
+- Pull synchronization between instances |
 
 ---
 
@@ -216,14 +215,14 @@ The Athens project will build
 
 - We do!!
 
-** We = TBH Foundation
-
-*** to be formed
+** We = to be formed TBH Foundation
 
 ---
 
 ## We love contributions
 
 https://github.com/gomods/athens
+
+gophers slack: #athens
 
 ---
